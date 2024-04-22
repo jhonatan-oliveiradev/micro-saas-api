@@ -15,6 +15,7 @@ export const findOneUserController = async (
 	response: Response
 ) => {
 	const { userId } = request.params;
+
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId
@@ -32,16 +33,15 @@ export const createUserController = async (
 	request: Request,
 	response: Response
 ) => {
-	const { userId } = request.params;
 	const { name, email } = request.body;
 
 	if (!name || !email) {
 		return response.send({
-			error: "Name or email invalid"
+			error: "Name or email is invalid"
 		});
 	}
 
-	const userEmailAlreadyExists = await prisma.user.findFirst({
+	const userEmailAlreadyExists = await prisma.user.findUnique({
 		where: {
 			email
 		},

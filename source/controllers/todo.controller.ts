@@ -29,7 +29,10 @@ export const createTodoController = async (
 
 	const todo = await prisma.todo.create({
 		data: {
-			title
+			title,
+			userId: user.id
 		}
 	});
+
+	return response.status(201).send(todo);
 };
